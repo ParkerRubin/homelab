@@ -1,0 +1,11 @@
+# media
+Jellyfin/media/
+*.mp4
+*.mkv
+*.avi
+
+# credentials, just in case
+config
+*.kubeconfig
+*.env
+*secret*

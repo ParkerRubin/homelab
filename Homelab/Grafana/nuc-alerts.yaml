@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nuc-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring   # needed so kube-prometheus-stack picks this up
+spec:
+  groups:
+  - name: nuc
+    rules:
+    - alert: NucHighCPU
+      expr: 100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 90
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: NUC CPU above 90%
+        description: 'CPU has been at {{ $value | printf "%.1f" }}% for 5 minutes.'
+
+    - alert: NucHighMemory
+      expr: 100 * (1 - sum(node_memory_MemAvailable_bytes) / sum(node_memory_MemTotal_bytes)) > 90
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: NUC memory above 90%
+        description: 'Memory has been at {{ $value | printf "%.1f" }}% for 5 minutes.'
+
+    - alert: NucHighDisk
+      expr: 100 * (1 - max(node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay|squashfs"}) / max(node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay|squashfs"})) > 90
+      for: 10m
+      labels:
+        severity: critical
+      annotations:
+        summary: NUC disk above 90%
+        description: 'Root disk is {{ $value | printf "%.1f" }}% full.'
