@@ -1,0 +1,2391 @@
+
+PLAY [Harden the NUC (keeps password SSH, k3s, Docker and Tailscale working)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Validating arguments against arg spec 'main' - The main entry point for the os hardening role.] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Include hardening tasks] *****************
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/hardening.yml for localhost
+
+TASK [devsec.hardening.os_hardening : Gather facts, if not present] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Fetch OS dependent variables] ************
+ok: [localhost] => (item=/home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/vars/Ubuntu.yml)
+
+TASK [devsec.hardening.os_hardening : Set OS dependent variables, if not already defined by user] ***
+ok: [localhost] => (item={'key': 'os_packages_pam_ccreds', 'value': 'libpam-ccreds'})
+ok: [localhost] => (item={'key': 'os_nologin_shell_path', 'value': '/usr/sbin/nologin'})
+ok: [localhost] => (item={'key': 'os_shadow_perms', 'value': {'owner': 'root', 'group': 'shadow', 'mode': '0640'}})
+ok: [localhost] => (item={'key': 'os_passwd_perms', 'value': {'owner': 'root', 'group': 'root', 'mode': '0644'}})
+ok: [localhost] => (item={'key': 'os_env_umask', 'value': '027'})
+ok: [localhost] => (item={'key': 'os_auth_uid_min', 'value': 1000})
+ok: [localhost] => (item={'key': 'os_auth_uid_max', 'value': 60000})
+ok: [localhost] => (item={'key': 'os_auth_gid_min', 'value': 1000})
+ok: [localhost] => (item={'key': 'os_auth_gid_max', 'value': 60000})
+ok: [localhost] => (item={'key': 'os_auth_sys_uid_min', 'value': 100})
+ok: [localhost] => (item={'key': 'os_auth_sys_uid_max', 'value': 999})
+ok: [localhost] => (item={'key': 'os_auth_sys_gid_min', 'value': 100})
+ok: [localhost] => (item={'key': 'os_auth_sys_gid_max', 'value': 999})
+ok: [localhost] => (item={'key': 'os_auth_sub_uid_min', 'value': 100000})
+ok: [localhost] => (item={'key': 'os_auth_sub_uid_max', 'value': 600100000})
+ok: [localhost] => (item={'key': 'os_auth_sub_uid_count', 'value': 65536})
+ok: [localhost] => (item={'key': 'os_auth_sub_gid_min', 'value': 100000})
+ok: [localhost] => (item={'key': 'os_auth_sub_gid_max', 'value': 600100000})
+ok: [localhost] => (item={'key': 'os_auth_sub_gid_count', 'value': 65536})
+skipping: [localhost] => (item={'key': 'os_mnt_boot_dir_mode', 'value': '0700'}) 
+ok: [localhost] => (item={'key': 'os_mnt_boot_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_boot_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_dev_dir_mode', 'value': '0755'}) 
+ok: [localhost] => (item={'key': 'os_mnt_dev_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_dev_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_dev_shm_dir_mode', 'value': '1777'}) 
+ok: [localhost] => (item={'key': 'os_mnt_dev_shm_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_dev_shm_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_home_dir_mode', 'value': '0755'}) 
+ok: [localhost] => (item={'key': 'os_mnt_home_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_home_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_run_dir_mode', 'value': '0755'}) 
+ok: [localhost] => (item={'key': 'os_mnt_run_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_run_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_tmp_dir_mode', 'value': '1777'}) 
+ok: [localhost] => (item={'key': 'os_mnt_tmp_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_tmp_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_var_dir_mode', 'value': '0755'}) 
+ok: [localhost] => (item={'key': 'os_mnt_var_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_var_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_var_log_dir_mode', 'value': '0775'}) 
+ok: [localhost] => (item={'key': 'os_mnt_var_log_group', 'value': 'syslog'})
+ok: [localhost] => (item={'key': 'os_mnt_var_log_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_var_log_audit_dir_mode', 'value': '0700'}) 
+ok: [localhost] => (item={'key': 'os_mnt_var_log_audit_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_var_log_audit_owner', 'value': 'root'})
+skipping: [localhost] => (item={'key': 'os_mnt_var_tmp_dir_mode', 'value': '1777'}) 
+ok: [localhost] => (item={'key': 'os_mnt_var_tmp_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_mnt_var_tmp_owner', 'value': 'root'})
+ok: [localhost] => (item={'key': 'os_useradd_mail_dir', 'value': '/var/mail'})
+ok: [localhost] => (item={'key': 'modprobe_package', 'value': 'kmod'})
+ok: [localhost] => (item={'key': 'auditd_package', 'value': 'auditd'})
+ok: [localhost] => (item={'key': 'tally2_path', 'value': '/usr/share/pam-configs/tally2'})
+ok: [localhost] => (item={'key': 'passwdqc_path', 'value': '/usr/share/pam-configs/passwdqc'})
+skipping: [localhost] => (item={'key': 'hidepid_option', 'value': '2'}) 
+ok: [localhost] => (item={'key': 'sysctl_custom_config', 'value': {'kernel.unprivileged_userns_clone': 0, 'kernel.unprivileged_bpf_disabled': 1}})
+
+TASK [devsec.hardening.os_hardening : Install auditd package | package-08] *****
+Solving dependencies...
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2 libjcat1
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libauparse0t64 libauplugin1
+Suggested packages:
+  audispd-plugins
+The following NEW packages will be installed:
+  auditd libauparse0t64 libauplugin1
+0 upgraded, 3 newly installed, 0 to remove and 21 not upgraded.
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure auditd | package-08] ***********
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmp0shiwyc_/auditd.conf.j2
+@@ -0,0 +1,30 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++write_logs = yes
++log_file = /var/log/audit/audit.log
++log_format = RAW
++log_group = root
++priority_boost = 4
++flush = INCREMENTAL
++freq = 20
++num_logs = 5
++disp_qos = lossy
++dispatcher = /sbin/audispd
++name_format = NONE
++max_log_file = 6
++max_log_file_action = keep_logs
++space_left = 75
++space_left_action = SYSLOG
++action_mail_acct = root
++admin_space_left = 50
++admin_space_left_action = SUSPEND
++disk_full_action = SUSPEND
++disk_error_action = SUSPEND
++tcp_listen_queue = 5
++tcp_max_per_addr = 1
++tcp_client_max_idle = 0
++enable_krb5 = no
++krb5_principal = auditd
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Disable systemd-journald.audit] **********
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Find cron files and directories] *********
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Ensure permissions on cron files and directories are configured] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0644",
++    "mode": "0600",
+     "path": "/etc/crontab"
+ }
+
+changed: [localhost] => (item={'path': '/etc/crontab', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 1136, 'inode': 7602566, 'dev': 2050, 'nlink': 1, 'atime': 1795570422.873048, 'mtime': 1762340267.0, 'ctime': 1795065954.6714494, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/etc/cron.monthly"
+ }
+
+changed: [localhost] => (item={'path': '/etc/cron.monthly', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 4096, 'inode': 7602213, 'dev': 2050, 'nlink': 2, 'atime': 1795570422.818047, 'mtime': 1787722240.0, 'ctime': 1795065954.8420758, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/etc/cron.weekly"
+ }
+
+changed: [localhost] => (item={'path': '/etc/cron.weekly', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 4096, 'inode': 7602214, 'dev': 2050, 'nlink': 2, 'atime': 1795570422.9080489, 'mtime': 1787722273.0, 'ctime': 1795065954.8420758, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/etc/cron.hourly"
+ }
+
+changed: [localhost] => (item={'path': '/etc/cron.hourly', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 4096, 'inode': 7602212, 'dev': 2050, 'nlink': 2, 'atime': 1795551421.2250307, 'mtime': 1787722052.0, 'ctime': 1795065954.8420758, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/etc/cron.daily"
+ }
+
+changed: [localhost] => (item={'path': '/etc/cron.daily', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 4096, 'inode': 7602211, 'dev': 2050, 'nlink': 2, 'atime': 1795523907.7205176, 'mtime': 1795192420.243847, 'ctime': 1795192420.243847, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/etc/cron.d"
+ }
+
+changed: [localhost] => (item={'path': '/etc/cron.d', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 4096, 'inode': 7602210, 'dev': 2050, 'nlink': 2, 'atime': 1795570423.49506, 'mtime': 1787722240.0, 'ctime': 1795065954.8420758, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+
+TASK [devsec.hardening.os_hardening : Disable CTRL-ALT-DEL] ********************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create limits.d-directory if it does not exist | sysctl-31a, sysctl-31b] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create additional limits config file -> 10.hardcore.conf | sysctl-31a, sysctl-31b] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Set 10.hardcore.conf perms to 0400 and root ownership] ***
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create coredump.conf.d-directory if it does not exist] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/systemd/coredump.conf.d",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create custom.conf for disabling coredumps] ***
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpwnqm_99_/coredumps.conf.j2
+@@ -0,0 +1,2 @@
++[Coredump]
++Storage=none
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove coredump.conf.d directory with files] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove 10.hardcore.conf config file] *****
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create login.defs | os-05, os-05b] *******
+--- before: /etc/login.defs
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmp3cyw87yo/login.defs.j2
+@@ -1,192 +1,216 @@
+ #
+-# /etc/login.defs - Configuration control definitions for the shadow package.
+-#
+-
+-# REQUIRED for useradd/userdel/usermod
+-#   Directory where mailboxes reside, _or_ name of file, relative to the
+-#   home directory.  If you _do_ define MAIL_DIR and MAIL_FILE,
+-#   MAIL_DIR takes precedence.
+-#
+-#   Essentially:
+-#      - MAIL_DIR defines the location of users mail spool files
+-#        (for mbox use) by appending the username to MAIL_DIR as defined
+-#        below.
+-#      - MAIL_FILE defines the location of the users mail spool files as the
+-#        fully-qualified filename obtained by prepending the user home
+-#        directory before $MAIL_FILE
+-#
+-# NOTE: This is no more used for setting up users MAIL environment variable
+-#       which is, starting from shadow 4.0.12-1 in Debian, entirely the
+-#       job of the pam_mail PAM modules
+-#       See default PAM configuration files provided for
+-#       login, su, etc.
+-#
+-# This is a temporary situation: setting these variables will soon
+-# move to /etc/default/useradd and the variables will then be
+-# no more supported
+-MAIL_DIR        /var/mail
+-#MAIL_FILE      .mail
+-
+-#
+-# Enable display of unknown usernames when login(1) failures are recorded.
+-#
+-# WARNING: Unknown usernames may become world readable.
+-# See #290803 and #298773 for details about how this could become a security
+-# concern
+-LOG_UNKFAIL_ENAB	no
+-
+-#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++# Configuration control definitions for the login package.
++#
++# Three items must be defined:  `MAIL_DIR`, `ENV_SUPATH`, and `ENV_PATH`. If unspecified, some arbitrary (and possibly incorrect) value will be assumed.  All other items are optional - if not specified then the described action or option will be inhibited.
++#
++# Comment lines and blank lines are ignored.
++#
++#-- Modified for Linux.  --marekm
++
++# *REQUIRED for useradd/userdel/usermod*
++#
++# Directory where mailboxes reside, _or_ name of file, relative to the home directory.  If you _do_ define `MAIL_DIR` and `MAIL_FILE`, `MAIL_DIR` takes precedence.
++# Essentially:
++#
++# * `MAIL_DIR` defines the location of users mail spool files (for mbox use) by appending the username to `MAIL_DIR` as defined below.
++# * `MAIL_FILE` defines the location of the users mail spool files as the fully-qualified filename obtained by prepending the user home directory before `$MAIL_FILE`
++#
++# *NOTE*: This is no more used for setting up users MAIL environment variable which is, starting from shadow 4.0.12-1 in Debian, entirely the job of the pam_mail PAM modules.
++#
++# See default PAM configuration files provided for login, su, etc.
++# This is a temporary situation: setting these variables will soon move to `/etc/default/useradd` and the variables will then be no more supported
++MAIL_DIR          /var/mail
++
++# Enable logging and display of `/var/log/faillog` login failure info. This option conflicts with the `pam_tally` PAM module.
++FAILLOG_ENAB      yes
++
++# Enable display of unknown usernames when login failures are recorded.
++#
++# *WARNING*: Unknown usernames may become world readable. See 290803 and 298773 for details about how this could become a security concern
++LOG_UNKFAIL_ENAB  no
++
+ # Enable logging of successful logins
+-#
+-LOG_OK_LOGINS		no
+-
+-#
+-# If defined, file which maps tty line to TERM environment parameter.
+-# Each line of the file is in a format similar to "vt100  tty01".
+-#
+-#TTYTYPE_FILE	/etc/ttytype
+-
+-#
+-# If defined, file which inhibits all the usual chatter during the login
+-# sequence.  If a full pathname, then hushed mode will be enabled if the
+-# user's name or shell are found in the file.  If not a full pathname, then
+-# hushed mode will be enabled if the file exists in the user's home directory.
+-#
+-HUSHLOGIN_FILE	.hushlogin
+-#HUSHLOGIN_FILE	/etc/hushlogins
+-
+-#
+-# *REQUIRED*  The default PATH settings, for superuser and normal users.
+-#
+-# (they are minimal, add the rest in the shell startup files)
+-ENV_SUPATH	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+-ENV_PATH	PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+-
+-#
+-# Terminal permissions for terminals after login(1).
+-# These settings are ignored for remote and other logins.
+-#
+-#	TTYGROUP	Login tty will be assigned this group ownership.
+-#	TTYPERM		Login tty will be set to this permission.
+-#
+-#TTYGROUP	tty
+-TTYPERM		0600
+-
+-#
+-# Login configuration initializations:
+-#
+-#	ERASECHAR	Terminal ERASE character ('\010' = backspace).
+-#	KILLCHAR	Terminal KILL character ('\025' = CTRL/U).
+-#
+-# The ERASECHAR and KILLCHAR are used only on System V machines.
+-#
+-ERASECHAR	0177
+-KILLCHAR	025
+-
+-# HOME_MODE is used by useradd(8) and newusers(8) to set the mode for new
+-# home directories.
+-HOME_MODE	0750
+-
+-#
+-# Password aging controls:
+-#
+-#	PASS_MAX_DAYS	Maximum number of days a password may be used.
+-#	PASS_MIN_DAYS	Minimum number of days allowed between password changes.
+-#	PASS_WARN_AGE	Number of days warning given before a password expires.
+-#
+-PASS_MAX_DAYS	99999
+-PASS_MIN_DAYS	0
+-PASS_WARN_AGE	7
+-
+-#
+-# Min/max values for automatic uid selection in useradd(8)
+-#
+-UID_MIN			 1000
+-UID_MAX			60000
++LOG_OK_LOGINS     yes
++
++# Enable "syslog" logging of su activity - in addition to sulog file logging.
++SYSLOG_SU_ENAB    yes
++
++# Enable "syslog" logging of newgrp and sg.
++SYSLOG_SG_ENAB    yes
++
++# If defined, all su activity is logged to this file.
++#SULOG_FILE        /var/log/sulog
++
++# If defined, file which maps tty line to `TERM` environment parameter. Each line of the file is in a format something like "vt100  tty01".
++#TTYTYPE_FILE      /etc/ttytype
++
++# If defined, login failures will be logged here in a utmp format last, when invoked as lastb, will read `/var/log/btmp`, so...
++FTMP_FILE         /var/log/btmp
++
++# If defined, the command name to display when running "su -".  For example, if this is defined as "su" then a "ps" will display the command is "-su".  If not defined, then "ps" would display the name of the shell actually being run, e.g. something like "-sh".
++SU_NAME           su
++
++# If defined, file which inhibits all the usual chatter during the login sequence.  If a full pathname, then hushed mode will be enabled if the user's name or shell are found in the file.  If not a full pathname, then hushed mode will be enabled if the file exists in the user's home directory.
++#HUSHLOGIN_FILE    /etc/hushlogins
++HUSHLOGIN_FILE    .hushlogin
++
++# *REQUIRED*: The default PATH settings, for superuser and normal users. (they are minimal, add the rest in the shell startup files)
++ENV_SUPATH        PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ENV_PATH          PATH=/usr/local/bin:/usr/bin:/bin:
++
++# Terminal permissions
++# --------------------
++
++# Login tty will be assigned this group ownership.
++# If you have a "write" program which is "setgid" to a special group which owns the terminals, define `TTYGROUP` to the group number and `TTYPERM` to `0620`.  Otherwise leave `TTYGROUP` commented out and assign `TTYPERM` to either `622` or `600`.
++TTYGROUP          tty
++
++# Login tty will be set to this permission.
++# In Debian `/usr/bin/bsd-write` or similar programs are setgid tty. However, the default and recommended value for `TTYPERM` is still `0600` to not allow anyone to write to anyone else console or terminal
++# Users can still allow other people to write them by issuing the `mesg y` command.
++TTYPERM           0600
++
++# Login conf initializations
++# --------------------------
++
++# Terminal ERASE character ('\010' = backspace). Only used on System V.
++ERASECHAR         0177
++
++# Terminal KILL character ('\025' = CTRL/U). Only used on System V.
++KILLCHAR          025
++
++# The default umask value for `pam_umask` and is used by useradd and newusers to set the mode of the new home directories.
++# If `USERGROUPS_ENAB` is set to `yes`, that will modify this `UMASK` default value for private user groups, i. e. the uid is the same as gid, and username is the same as the primary group name: for these, the user permissions will be used as group permissions, e. g. `022` will become `002`.
++# Prefix these values with `0` to get octal, `0x` to get hexadecimal.
++# `022` is the "historical" value in Debian for UMASK
++# `027`, or even `077`, could be considered better for privacy.
++UMASK             027
++
++# Enable setting of the umask group bits to be the same as owner bits (examples: `022` -> `002`, `077` -> `007`) for non-root users, if the uid is the same as gid, and username is the same as the primary group name.
++# If set to yes, userdel will remove the user's group if it contains no more members, and useradd will create by default a group with the name of the user.
++USERGROUPS_ENAB   yes
++
++
++# Password aging controls
++# -----------------------
++
++# Maximum number of days a password may be used.
++PASS_MAX_DAYS     99999
++
++# Number of days warning given before a password expires.
++PASS_WARN_AGE     7
++
++# Min/max values for automatic uid selection in useradd
++UID_MIN           1000
++UID_MAX           60000
+ # System accounts
+-#SYS_UID_MIN		  101
+-#SYS_UID_MAX		  999
+-# Extra per user uids
+-SUB_UID_MIN		   100000
+-SUB_UID_MAX		600100000
+-SUB_UID_COUNT		    65536
+-
+-#
+-# Min/max values for automatic gid selection in groupadd(8)
+-#
+-GID_MIN			 1000
+-GID_MAX			60000
++SYS_UID_MIN       100
++SYS_UID_MAX       999
++
++# Min/max values for automatic gid selection in groupadd
++GID_MIN           1000
++GID_MAX           60000
+ # System accounts
+-#SYS_GID_MIN		  101
+-#SYS_GID_MAX		  999
+-# Extra per user group ids
+-SUB_GID_MIN		   100000
+-SUB_GID_MAX		600100000
+-SUB_GID_COUNT		    65536
+-
+-#
+-# Max number of login(1) retries if password is bad
+-# This will most likely be overriden by PAM, since the default pam_unix module
+-# has it's own built in of 3 retries. However, this is a safe fallback in case
+-# you are using an authentication module that does not enforce PAM_MAXTRIES.
+-#
+-LOGIN_RETRIES		5
+-
+-#
+-# Max time in seconds for login(1)
+-#
+-LOGIN_TIMEOUT		60
+-
+-#
+-# Which fields may be changed by regular users using chfn(1) - use
+-# any combination of letters "frwh" (full name, room number, work
+-# phone, home phone).  If not defined, no changes are allowed.
++SYS_GID_MIN       100
++SYS_GID_MAX       999
++
++# If /etc/subuid exists, the commands useradd and newusers (unless the user already have subordinate user IDs)
++# allocate SUB_UID_COUNT unused user IDs from the range SUB_UID_MIN to SUB_UID_MAX for each new user.
++# The default values for SUB_UID_MIN, SUB_UID_MAX, SUB_UID_COUNT are respectively 100000, 600100000 and 65536.
++SUB_UID_MIN       100000
++SUB_UID_MAX       600100000
++SUB_UID_COUNT     65536
++SUB_GID_MIN       100000
++SUB_GID_MAX       600100000
++SUB_GID_COUNT     65536
++
++# Max number of login retries if password is bad. This will most likely be overridden by PAM, since the default pam_unix module has it's own built in of 3 retries. However, this is a safe fallback in case you are using an authentication module that does not enforce PAM_MAXTRIES.
++LOGIN_RETRIES     5
++
++# Max time in seconds for login
++LOGIN_TIMEOUT     60
++
++# Which fields may be changed by regular users using chfn - use any combination of letters "frwh" (full name, room number, work phone, home phone).  If not defined, no changes are allowed.
+ # For backward compatibility, "yes" = "rwh" and "no" = "frwh".
+-#
+-CHFN_RESTRICT		rwh
+-
+-#
+-# If set to MD5, MD5-based algorithm will be used for encrypting password
+-# If set to SHA256, SHA256-based algorithm will be used for encrypting password
+-# If set to SHA512, SHA512-based algorithm will be used for encrypting password
+-# If set to BCRYPT, BCRYPT-based algorithm will be used for encrypting password
+-# If set to YESCRYPT, YESCRYPT-based algorithm will be used for encrypting password
+-# If set to DES, DES-based algorithm will be used for encrypting password (default)
+-# MD5 and DES should not be used for new hashes, see crypt(5) for recommendations.
+-# Overrides the MD5_CRYPT_ENAB option
+-#
+-# Note: It is recommended to use a value consistent with
+-# the PAM modules configuration.
+-#
+-ENCRYPT_METHOD YESCRYPT
+-
+-#
+ # Should login be allowed if we can't cd to the home directory?
+-# Default is no.
+-#
+-DEFAULT_HOME	yes
+-
+-#
+-# The pwck(8) utility emits a warning for any system account with a home
+-# directory that does not exist.  Some system accounts intentionally do
+-# not have a home directory.  Such accounts may have this string as
+-# their home directory in /etc/passwd to avoid a spurious warning.
+-#
+-NONEXISTENT	/nonexistent
+-
+-#
++DEFAULT_HOME      no
++
+ # If defined, this command is run when removing a user.
+ # It should remove any at/cron/print jobs etc. owned by
+ # the user to be removed (passed as the first argument).
+-#
+-#USERDEL_CMD	/usr/sbin/userdel_local
+-
+-#
+-# If set to yes, userdel(8) will remove the user's group if it contains no more
+-# members, and useradd(8) will create by default a group with the name of the
+-# user.
+-#
+-# Other former uses of this variable are not used in PAM environments, such as
+-# Debian.
+-#
+-USERGROUPS_ENAB yes
++#USERDEL_CMD       /usr/sbin/userdel_local
++
++# Instead of the real user shell, the program specified by this parameter will be launched, although its visible name (`argv[0]`) will be the shell's. The program may do whatever it wants (logging, additional authentication, banner, ...) before running the actual shell.
++#FAKE_SHELL        /bin/fakeshell
++
++# If defined, either full pathname of a file containing device names or a ":" delimited list of device names.  Root logins will be allowed only upon these devices.
++# This variable is used by login and su.
++#CONSOLE           /etc/consoles
++#CONSOLE           console:tty01:tty02:tty03:tty04
++
++# List of groups to add to the user's supplementary group set when logging in on the console (as determined by the `CONSOLE` setting).  Default is none.
++# Use with caution - it is possible for users to gain permanent access to these groups, even when not logged in on the console. How to do it is left as an exercise for the reader...
++# This variable is used by login and su.
++#CONSOLE_GROUPS    floppy:audio:cdrom
++
++# If set to `MD5`, MD5-based algorithm will be used for encrypting password
++# If set to `SHA256`, SHA256-based algorithm will be used for encrypting password
++# If set to `SHA512`, SHA512-based algorithm will be used for encrypting password
++# If set to `DES`, DES-based algorithm will be used for encrypting password (default)
++# Overrides the MD5_CRYPT_ENAB option
++#
++# Note: It is recommended to use a value consistent with
++# the PAM modules configuration.
++MD5_CRYPT_ENAB    no
++ENCRYPT_METHOD    SHA512
++
++# Only used if `ENCRYPT_METHOD` is set to `SHA256` or `SHA512`: Define the number of SHA rounds.
++# With a lot of rounds brute forcing the password is more difficult. But note also that it more CPU resources will be needed to authenticate users.
++# If not specified, the libc will choose the default number of rounds (5000). The values must be inside the 1000-999999999 range. If only one of the MIN or MAX values is set, then this value will be used.
++# If MIN > MAX, the highest value will be used.
++SHA_CRYPT_MIN_ROUNDS    640000
++SHA_CRYPT_MAX_ROUNDS    640000
++
++
++# Obsoleted by PAM
++# ================
++# These options are now handled by PAM. Please edit the appropriate file in `/etc/pam.d/` to enable their equivalents.
++#MOTD_FILE
++#DIALUPS_CHECK_ENAB
++#LASTLOG_ENAB
++#MAIL_CHECK_ENAB
++#OBSCURE_CHECKS_ENAB
++#PORTTIME_CHECKS_ENAB
++#SU_WHEEL_ONLY
++#CRACKLIB_DICTPATH
++#PASS_CHANGE_TRIES
++#PASS_ALWAYS_WARN
++#ENVIRON_FILE
++#NOLOGINS_FILE
++#ISSUE_FILE
++#PASS_MIN_LEN
++#PASS_MAX_LEN
++#ULIMIT
++#ENV_HZ
++#CHFN_AUTH
++#CHSH_AUTH
++#FAIL_DELAY
++
++# Obsoleted
++# =========
++# These options are no more handled by shadow.
++# Shadow utilities will display a warning if they still appear.
++#CLOSE_SESSIONS
++#LOGIN_STRING
++#NO_PASSWORD_CONSOLE
++#QMAIL_DIR
++
++# If set to `yes`, new passwords will be encrypted using the MD5-based algorithm compatible with the one used by recent releases of FreeBSD. It supports passwords of unlimited length and longer salt strings.
++# Set to `no` if you need to copy encrypted passwords to other systems which don't understand the new algorithm.  Default is `no`.
++# This variable is deprecated. You should use ENCRYPT_METHOD.
++#
++#MD5_CRYPT_ENAB no
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Find files with write-permissions for group] ***
+skipping: [localhost] => (item=/usr/local/sbin) 
+skipping: [localhost] => (item=/usr/local/bin) 
+skipping: [localhost] => (item=/usr/sbin) 
+skipping: [localhost] => (item=/usr/bin) 
+skipping: [localhost] => (item=/sbin) 
+skipping: [localhost] => (item=/bin) 
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Minimize access on found files] **********
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Find shadow files] ***********************
+ok: [localhost] => (item=/etc/shadow)
+ok: [localhost] => (item=/etc/gshadow)
+ok: [localhost] => (item=/etc/shadow-)
+ok: [localhost] => (item=/etc/gshadow-)
+
+TASK [devsec.hardening.os_hardening : Change shadow ownership to root and mode to 0600 | os-02] ***
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/shadow', 'mode': '0640', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 42, 'size': 1352, 'inode': 7604973, 'dev': 2050, 'nlink': 1, 'atime': 1795570398.74959, 'mtime': 1795570384.5666966, 'ctime': 1795570384.5713205, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'shadow', 'checksum': 'b43e5ab912c482ba58d0959d896d25ada70266b7', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '2280857387', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/shadow', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/shadow', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/gshadow', 'mode': '0640', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 42, 'size': 993, 'inode': 7604936, 'dev': 2050, 'nlink': 1, 'atime': 1795570384.548069, 'mtime': 1795570384.4364283, 'ctime': 1795570384.438318, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'shadow', 'checksum': 'e3e1653994db0e144f9dde4d868d28cc17721c4e', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '1736299530', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/gshadow', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/gshadow', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/shadow-', 'mode': '0640', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 42, 'size': 1332, 'inode': 7604929, 'dev': 2050, 'nlink': 1, 'atime': 1795570422.8200471, 'mtime': 1795190518.0, 'ctime': 1795570384.5653203, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'shadow', 'checksum': 'cd387af39cdbcb218bef8d26eebdfb60eb09a31e', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '923009372', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/shadow-', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/shadow-', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/gshadow-', 'mode': '0640', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 42, 'size': 983, 'inode': 7602624, 'dev': 2050, 'nlink': 1, 'atime': 1795570422.810047, 'mtime': 1795190775.0, 'ctime': 1795570384.435318, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'shadow', 'checksum': '2bc9e86288e537f7ea707219418164ef8a38acf5', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '1176481157', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/gshadow-', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/gshadow-', 'ansible_loop_var': 'item'})
+
+TASK [devsec.hardening.os_hardening : Find passwd files] ***********************
+ok: [localhost] => (item=/etc/passwd)
+ok: [localhost] => (item=/etc/group)
+ok: [localhost] => (item=/etc/passwd-)
+ok: [localhost] => (item=/etc/group-)
+
+TASK [devsec.hardening.os_hardening : Change passwd ownership to root and mode to 0644 | os-03] ***
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/passwd', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 2869, 'inode': 7605026, 'dev': 2050, 'nlink': 1, 'atime': 1795570384.5723205, 'mtime': 1795570384.5554628, 'ctime': 1795570384.5603204, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'root', 'checksum': '10d61fc277dda210c4a0939918ce2585b0c988c3', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '3557715464', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/passwd', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/passwd', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/group', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 1167, 'inode': 7604955, 'dev': 2050, 'nlink': 1, 'atime': 1795570384.485319, 'mtime': 1795570384.4256716, 'ctime': 1795570384.4303179, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'root', 'checksum': 'de8bf6e123c88ca38f2feba7a2b913e92c16c376', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '906120096', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/group', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/group', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/passwd-', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 2827, 'inode': 7604975, 'dev': 2050, 'nlink': 1, 'atime': 1795570423.3560574, 'mtime': 1795190518.0, 'ctime': 1795570384.55432, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'root', 'checksum': '984c06fb65bc91e224bfc7ba41f7c10a0c1993a5', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '1467100919', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/passwd-', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/passwd-', 'ansible_loop_var': 'item'})
+ok: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '/etc/group-', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 1154, 'inode': 7604928, 'dev': 2050, 'nlink': 1, 'atime': 1795570423.087052, 'mtime': 1795190775.0, 'ctime': 1795570384.4243176, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'root', 'gr_name': 'root', 'checksum': 'c350229c42318c1f5b74f37e6b9a99e7b3cbca59', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '1539387181', 'attributes': ['extents'], 'attr_flags': 'e'}, 'invocation': {'module_args': {'path': '/etc/group-', 'follow': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'get_selinux_context': False, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': '/etc/group-', 'ansible_loop_var': 'item'})
+
+TASK [devsec.hardening.os_hardening : Change su-binary to only be accessible to user and group root] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "04755",
++    "mode": "0750",
+     "path": "/bin/su"
+ }
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Define proc_mnt_options including hidepid_option] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Set option hidepid for proc filesystem] ***
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: Importing 'to_bytes' from 'ansible.module_utils._text' is deprecated. This feature will be removed from ansible-core version 2.24. Use ansible.module_utils.common.text.converters instead.
+[DEPRECATION WARNING]: Importing 'to_native' from 'ansible.module_utils._text' is deprecated. This feature will be removed from ansible-core version 2.24. Use ansible.module_utils.common.text.converters instead.
+[DEPRECATION WARNING]: Passing `warnings` to `exit_json` or `fail_json` is deprecated. This feature will be removed from ansible-core version 2.23. Use `AnsibleModule.warn` instead.
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Generate list of current available mounted filesystems on the system] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Append special devices list to valid mountpoint list] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Minimize access for filesystems] *********
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/boot', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': False, 'mode': '0700', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/dev', 'src': 'devtmpfs', 'fstype': 'devtmpfs', 'opts': 'rw,nosuid,noexec', 'enabled': True, 'mode': '0755', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/dev/shm', 'src': 'tmpfs', 'fstype': 'tmpfs', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': True, 'mode': '1777', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/home', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev', 'enabled': False, 'mode': '0755', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/run', 'src': 'tmpfs', 'fstype': 'tmpfs', 'opts': 'rw,nosuid,nodev', 'enabled': True, 'mode': '0755', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/tmp', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': False, 'mode': '1777', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/var', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev', 'enabled': False, 'mode': '0755', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/var/log', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': False, 'mode': '0755', 'group': 'syslog', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/var/log/audit', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': False, 'mode': '0700', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/tasks/minimize_access_fs.yml for localhost => (item={'path': '/var/tmp', 'src': '', 'fstype': '', 'opts': 'rw,nosuid,nodev,noexec', 'enabled': False, 'mode': '1777', 'group': 'root', 'owner': 'root', 'dump': '', 'passno': ''})
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /boot] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /boot] ******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /boot] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/boot"
+ }
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /dev] ***
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /dev] *******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /dev] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /dev/shm] ***
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /dev/shm] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /dev/shm] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /home] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /home] ******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /home] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /run] ***
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /run] *******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /run] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /tmp] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /tmp] *******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /tmp] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /var] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /var] *******
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /var] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /var/log] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /var/log] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /var/log] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0775",
++    "mode": "0755",
+     "path": "/var/log"
+ }
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /var/log/audit] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /var/log/audit] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /var/log/audit] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure hardened options for mount /var/tmp] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check for existence of mount /var/tmp] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Harden permissions for directory of mount /var/tmp] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Register changed mountpoints] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Gather package facts] ********************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove pam ccreds to disable password caching] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Install the package for strong password checking] ***
+Solving dependencies...
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2 libjcat1
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libpasswdqc1 passwdqc
+The following NEW packages will be installed:
+  libpam-passwdqc libpasswdqc1 passwdqc
+0 upgraded, 3 newly installed, 0 to remove and 21 not upgraded.
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure passwdqc] **********************
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpd0qtlnwr/pam_passwdqc.j2
+@@ -0,0 +1,12 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++Name: passwdqc password strength enforcement
++Default: yes
++Priority: 1024
++Conflicts: cracklib
++Password-Type: Primary
++Password:
++  requisite     pam_passwdqc.so min=disabled,disabled,16,12,8
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Install tally2] **************************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure tally2] ************************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete tally2 when retries is 0] *********
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete tally2] ***************************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create tally directory] ******************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/var/run/faillock",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure faillock] **********************
+--- before: /etc/security/faillock.conf
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmp_gjxsxj3/faillock.conf.j2
+@@ -1,3 +1,8 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++#
+ # Configuration for locking the user after multiple failed
+ # authentication attempts.
+ #
+@@ -29,7 +34,7 @@
+ # Deny access if the number of consecutive authentication failures
+ # for this user during the recent interval exceeds n tries.
+ # The default is 3.
+-# deny = 3
++deny = 5
+ #
+ # The length of the interval during which the consecutive
+ # authentication failures must happen for the user account
+@@ -42,11 +47,11 @@
+ # will not be re-enabled without resetting the faillock
+ # entries by the `faillock` command.
+ # The default is 600 (10 minutes).
+-# unlock_time = 600
++unlock_time = 600
+ #
+ # Root account can become locked as well as regular accounts.
+ # Enabled if option is present.
+-# even_deny_root
++even_deny_root
+ #
+ # This option implies the `even_deny_root` option.
+ # Allow access after n seconds to root account after the
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure faillock pam] ******************
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpn5tckeky/pam_faillock.j2
+@@ -0,0 +1,14 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++Name: faillock boilerplate
++Default: yes
++Priority: 1024
++Auth-Type: Primary
++Auth:
++  required           pam_faillock.so preauth
++Account-Type: Primary
++Account:
++  required           pam_faillock.so
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure faillock pam authfail] *********
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpg4yoh3pt/pam_faillock_authfail.j2
+@@ -0,0 +1,12 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++Name: faillock lockout after failed attempts enforcement
++Default: yes
++Priority: 0
++Auth-Type: Primary
++Auth:
++  required           pam_faillock.so authfail
++
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete faillock when retries is 0] *******
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete faillock authfail when retries is 0] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Update pam on Debian systems] ************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove passwdqc] *************************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Allow Login with SSH Keys, when user password is expired] ***
+--- before: /etc/pam.d/common-account (content)
++++ after: /etc/pam.d/common-account (content)
+@@ -14,7 +14,7 @@
+ #
+ 
+ # here are the per-package modules (the "Primary" block)
+-account	[success=1 new_authtok_reqd=done default=ignore]	pam_unix.so 
++account	[success=1 new_authtok_reqd=done default=ignore]	pam_unix.so  no_pass_expiry
+ # here's the fallback if no module succeeds
+ account	requisite			pam_deny.so
+ # prime the stack with a positive return value if there isn't one already;
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Install sssd-clients] ********************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure passwdqc and faillock via central system-auth config] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Enable our config for system-auth] *******
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure passwdqc and faillock via central password-auth config] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Enable our config for password-auth] *****
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Allow Login with SSH Keys, when user password is expired] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Allow Login with SSH Keys, when user password is expired] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : NSA 2.3.3.5 Upgrade Password Hashing Algorithm to SHA-512] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Install modprobe to disable filesystems | os-10] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Check if efi is installed] ***************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove vfat from fs-list if efi is used] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove used filesystems from fs-list] ****
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Disable unused filesystems | os-10] ******
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpe_g2vwvp/modprobe.j2
+@@ -0,0 +1,15 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++install cramfs /bin/true
++install dccp /bin/true
++install freevxfs /bin/true
++install hfs /bin/true
++install hfsplus /bin/true
++install jffs2 /bin/true
++install rds /bin/true
++install sctp /bin/true
++install tipc /bin/true
++install udf /bin/true
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Add pinerolo_profile.sh to profile.d] ****
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpwsuvxzkw/profile.conf.j2
+@@ -0,0 +1,7 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++# Disable core dumps via soft limits for all users. Compliance to this setting is voluntary and can be modified by users up to a hard limit. This setting is a sane default.
++ulimit -S -c 0 > /dev/null 2>&1
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove pinerolo_profile.sh from profile.d] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Add autologout to profile env] ***********
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpjdt83xdm/tmout.sh.j2
+@@ -0,0 +1,3 @@
++# Logout Timeout
++export TMOUT=0
++readonly TMOUT
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Create securetty] ************************
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpxl2qryxs/securetty.j2
+@@ -0,0 +1,14 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
++# A list of TTYs, from which root can log in
++# see `man securetty` for reference
++console
++tty1
++tty2
++tty3
++tty4
++tty5
++tty6
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove suid/sgid bit from binaries in blacklist | os-06] ***
+ok: [localhost] => (item=/usr/bin/rcp)
+ok: [localhost] => (item=/usr/bin/rlogin)
+ok: [localhost] => (item=/usr/bin/rsh)
+ok: [localhost] => (item=/usr/libexec/openssh/ssh-keysign)
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "04755",
++    "mode": "0755",
+     "path": "/usr/lib/openssh/ssh-keysign"
+ }
+
+changed: [localhost] => (item=/usr/lib/openssh/ssh-keysign)
+ok: [localhost] => (item=/sbin/netreport)
+ok: [localhost] => (item=/usr/sbin/usernetctl)
+ok: [localhost] => (item=/usr/sbin/userisdnctl)
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "04754",
++    "mode": "0754",
+     "path": "/usr/sbin/pppd"
+ }
+
+changed: [localhost] => (item=/usr/sbin/pppd)
+ok: [localhost] => (item=/usr/bin/lockfile)
+ok: [localhost] => (item=/usr/bin/mail-lock)
+ok: [localhost] => (item=/usr/bin/mail-unlock)
+ok: [localhost] => (item=/usr/bin/mail-touchlock)
+ok: [localhost] => (item=/usr/bin/dotlockfile)
+ok: [localhost] => (item=/usr/bin/arping)
+ok: [localhost] => (item=/usr/sbin/uuidd)
+ok: [localhost] => (item=/usr/bin/mtr)
+ok: [localhost] => (item=/usr/lib/evolution/camel-lock-helper-1.2)
+ok: [localhost] => (item=/usr/lib/pt_chown)
+ok: [localhost] => (item=/usr/lib/eject/dmcrypt-get-device)
+ok: [localhost] => (item=/usr/lib/mc/cons.saver)
+
+TASK [devsec.hardening.os_hardening : Find binaries with suid/sgid set | os-06] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Gather files from which to remove suids/sgids and remove system white-listed files | os-06] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove suid/sgid bit from all binaries except in system and user whitelist | os-06] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Set Daemon umask, do config for rhel-family | NSA 2.2.4.1] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Protect sysctl.conf] *********************
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Change various sysctl-settings, look at the sysctl-vars file for documentation] ***
+changed: [localhost] => (item={'key': 'fs.protected_hardlinks', 'value': 1})
+changed: [localhost] => (item={'key': 'fs.protected_symlinks', 'value': 1})
+changed: [localhost] => (item={'key': 'fs.protected_fifos', 'value': 1})
+changed: [localhost] => (item={'key': 'fs.protected_regular', 'value': 2})
+changed: [localhost] => (item={'key': 'fs.suid_dumpable', 'value': 0})
+changed: [localhost] => (item={'key': 'kernel.core_uses_pid', 'value': 1})
+changed: [localhost] => (item={'key': 'kernel.kptr_restrict', 'value': 2})
+changed: [localhost] => (item={'key': 'kernel.kexec_load_disabled', 'value': 1})
+changed: [localhost] => (item={'key': 'kernel.sysrq', 'value': 0})
+changed: [localhost] => (item={'key': 'kernel.randomize_va_space', 'value': 2})
+changed: [localhost] => (item={'key': 'kernel.yama.ptrace_scope', 'value': 2})
+changed: [localhost] => (item={'key': 'net.ipv4.ip_forward', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.forwarding', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.rp_filter', 'value': 2})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.rp_filter', 'value': 2})
+changed: [localhost] => (item={'key': 'net.ipv4.icmp_echo_ignore_broadcasts', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.icmp_ignore_bogus_error_responses', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.icmp_ratelimit', 'value': 100})
+changed: [localhost] => (item={'key': 'net.ipv4.icmp_ratemask', 'value': 88089})
+changed: [localhost] => (item={'key': 'net.ipv4.tcp_timestamps', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.arp_ignore', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.arp_announce', 'value': 2})
+changed: [localhost] => (item={'key': 'net.ipv4.tcp_rfc1337', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.tcp_syncookies', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.shared_media', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.shared_media', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.accept_source_route', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.accept_source_route', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.accept_source_route', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_source_route', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.send_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.send_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.log_martians', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.log_martians', 'value': 1})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.accept_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.accept_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.all.secure_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv4.conf.default.secure_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.accept_redirects', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.accept_ra', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_ra', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.router_solicitations', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.router_solicitations', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_ra_rtr_pref', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_ra_pinfo', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.accept_ra_defrtr', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.autoconf', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.all.autoconf', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.dad_transmits', 'value': 0})
+changed: [localhost] => (item={'key': 'net.ipv6.conf.default.max_addresses', 'value': 1})
+changed: [localhost] => (item={'key': 'vm.mmap_min_addr', 'value': 65536})
+changed: [localhost] => (item={'key': 'vm.mmap_rnd_bits', 'value': 32})
+changed: [localhost] => (item={'key': 'vm.mmap_rnd_compat_bits', 'value': 16})
+changed: [localhost] => (item={'key': 'kernel.unprivileged_userns_clone', 'value': 0})
+changed: [localhost] => (item={'key': 'kernel.unprivileged_bpf_disabled', 'value': 1})
+
+TASK [devsec.hardening.os_hardening : Apply ufw defaults] **********************
+--- before: /etc/default/ufw
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpeiqcd35o/ufw.j2
+@@ -1,3 +1,8 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.os_hardening
++
+ # /etc/default/ufw
+ #
+ 
+@@ -26,22 +31,19 @@
+ # By default, ufw only touches its own chains. Set this to 'yes' to have ufw
+ # manage the built-in chains too. Warning: setting this to 'yes' will break
+ # non-ufw managed firewall rules
+-MANAGE_BUILTINS=no
++MANAGE_BUILTINS="no"
+ 
+ #
+ # IPT backend
+ #
+-# only enable if using iptables backend
+-IPT_SYSCTL=/etc/ufw/sysctl.conf
++# only enable if using iptables backend and want to overwrite /etc/sysctl.conf
++#IPT_SYSCTL=
+ 
+-# Extra connection tracking modules to load. IPT_MODULES should typically be
+-# empty for new installations and modules added only as needed. See
+-# 'CONNECTION HELPERS' from 'man ufw-framework' for details. Complete list can
+-# be found in net/netfilter/Kconfig of your kernel source. Some common modules:
++# Extra connection tracking modules to load. Complete list can be found in
++# net/netfilter/Kconfig of your kernel source. Some common modules:
+ # nf_conntrack_irc, nf_nat_irc: DCC (Direct Client to Client) support
+ # nf_conntrack_netbios_ns: NetBIOS (samba) client support
+ # nf_conntrack_pptp, nf_nat_pptp: PPTP over stateful firewall/NAT
+ # nf_conntrack_ftp, nf_nat_ftp: active FTP support
+ # nf_conntrack_tftp, nf_nat_tftp: TFTP support (server side)
+-# nf_conntrack_sane: sane support
+-IPT_MODULES=""
++IPT_MODULES="nf_conntrack_ftp nf_nat_ftp nf_conntrack_netbios_ns"
+
+changed: [localhost]
+
+TASK [devsec.hardening.os_hardening : Read local linux user database] **********
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Read local linux shadow database] ********
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Extract system accounts from local user database] ***
+skipping: [localhost] => (item=root) 
+ok: [localhost] => (item=daemon)
+ok: [localhost] => (item=bin)
+ok: [localhost] => (item=sys)
+skipping: [localhost] => (item=sync) 
+ok: [localhost] => (item=games)
+ok: [localhost] => (item=man)
+ok: [localhost] => (item=lp)
+ok: [localhost] => (item=mail)
+ok: [localhost] => (item=news)
+ok: [localhost] => (item=uucp)
+ok: [localhost] => (item=proxy)
+ok: [localhost] => (item=www-data)
+ok: [localhost] => (item=backup)
+ok: [localhost] => (item=list)
+ok: [localhost] => (item=irc)
+ok: [localhost] => (item=_apt)
+skipping: [localhost] => (item=nobody) 
+ok: [localhost] => (item=systemd-network)
+ok: [localhost] => (item=dhcpcd)
+ok: [localhost] => (item=messagebus)
+ok: [localhost] => (item=syslog)
+ok: [localhost] => (item=systemd-resolve)
+ok: [localhost] => (item=_chrony)
+ok: [localhost] => (item=tss)
+ok: [localhost] => (item=uuidd)
+ok: [localhost] => (item=systemd-oom)
+ok: [localhost] => (item=whoopsie)
+ok: [localhost] => (item=dnsmasq)
+ok: [localhost] => (item=avahi)
+ok: [localhost] => (item=nm-openvpn)
+ok: [localhost] => (item=tcpdump)
+ok: [localhost] => (item=sssd)
+ok: [localhost] => (item=speech-dispatcher)
+ok: [localhost] => (item=usbmux)
+ok: [localhost] => (item=cups-pk-helper)
+ok: [localhost] => (item=fwupd-refresh)
+ok: [localhost] => (item=saned)
+ok: [localhost] => (item=geoclue)
+ok: [localhost] => (item=cups-browsed)
+ok: [localhost] => (item=pipewire)
+ok: [localhost] => (item=hplip)
+ok: [localhost] => (item=gnome-remote-desktop)
+ok: [localhost] => (item=polkitd)
+ok: [localhost] => (item=rtkit)
+ok: [localhost] => (item=colord)
+ok: [localhost] => (item=gdm)
+skipping: [localhost] => (item=parker) 
+ok: [localhost] => (item=sshd)
+ok: [localhost] => (item=wazuh)
+
+TASK [devsec.hardening.os_hardening : Extract regular (non-system, non-root) accounts from local user database] ***
+skipping: [localhost] => (item=root) 
+skipping: [localhost] => (item=daemon) 
+skipping: [localhost] => (item=bin) 
+skipping: [localhost] => (item=sys) 
+skipping: [localhost] => (item=sync) 
+skipping: [localhost] => (item=games) 
+skipping: [localhost] => (item=man) 
+skipping: [localhost] => (item=lp) 
+skipping: [localhost] => (item=mail) 
+skipping: [localhost] => (item=news) 
+skipping: [localhost] => (item=uucp) 
+skipping: [localhost] => (item=proxy) 
+skipping: [localhost] => (item=www-data) 
+skipping: [localhost] => (item=backup) 
+skipping: [localhost] => (item=list) 
+skipping: [localhost] => (item=irc) 
+skipping: [localhost] => (item=_apt) 
+skipping: [localhost] => (item=nobody) 
+skipping: [localhost] => (item=systemd-network) 
+skipping: [localhost] => (item=dhcpcd) 
+skipping: [localhost] => (item=messagebus) 
+skipping: [localhost] => (item=syslog) 
+skipping: [localhost] => (item=systemd-resolve) 
+skipping: [localhost] => (item=_chrony) 
+skipping: [localhost] => (item=tss) 
+skipping: [localhost] => (item=uuidd) 
+skipping: [localhost] => (item=systemd-oom) 
+skipping: [localhost] => (item=whoopsie) 
+skipping: [localhost] => (item=dnsmasq) 
+skipping: [localhost] => (item=avahi) 
+skipping: [localhost] => (item=nm-openvpn) 
+skipping: [localhost] => (item=tcpdump) 
+skipping: [localhost] => (item=sssd) 
+skipping: [localhost] => (item=speech-dispatcher) 
+skipping: [localhost] => (item=usbmux) 
+skipping: [localhost] => (item=cups-pk-helper) 
+skipping: [localhost] => (item=fwupd-refresh) 
+skipping: [localhost] => (item=saned) 
+skipping: [localhost] => (item=geoclue) 
+skipping: [localhost] => (item=cups-browsed) 
+skipping: [localhost] => (item=pipewire) 
+skipping: [localhost] => (item=hplip) 
+skipping: [localhost] => (item=gnome-remote-desktop) 
+skipping: [localhost] => (item=polkitd) 
+skipping: [localhost] => (item=rtkit) 
+skipping: [localhost] => (item=colord) 
+skipping: [localhost] => (item=gdm) 
+ok: [localhost] => (item=parker)
+skipping: [localhost] => (item=sshd) 
+skipping: [localhost] => (item=wazuh) 
+
+TASK [devsec.hardening.os_hardening : Set password ageing for existing regular (non-system, non-root) accounts] ***
+ok: [localhost] => (item=parker)
+
+TASK [devsec.hardening.os_hardening : Extract root account(s) from local user database] ***
+ok: [localhost] => (item=root)
+skipping: [localhost] => (item=daemon) 
+skipping: [localhost] => (item=bin) 
+skipping: [localhost] => (item=sys) 
+skipping: [localhost] => (item=sync) 
+skipping: [localhost] => (item=games) 
+skipping: [localhost] => (item=man) 
+skipping: [localhost] => (item=lp) 
+skipping: [localhost] => (item=mail) 
+skipping: [localhost] => (item=news) 
+skipping: [localhost] => (item=uucp) 
+skipping: [localhost] => (item=proxy) 
+skipping: [localhost] => (item=www-data) 
+skipping: [localhost] => (item=backup) 
+skipping: [localhost] => (item=list) 
+skipping: [localhost] => (item=irc) 
+skipping: [localhost] => (item=_apt) 
+skipping: [localhost] => (item=nobody) 
+skipping: [localhost] => (item=systemd-network) 
+skipping: [localhost] => (item=dhcpcd) 
+skipping: [localhost] => (item=messagebus) 
+skipping: [localhost] => (item=syslog) 
+skipping: [localhost] => (item=systemd-resolve) 
+skipping: [localhost] => (item=_chrony) 
+skipping: [localhost] => (item=tss) 
+skipping: [localhost] => (item=uuidd) 
+skipping: [localhost] => (item=systemd-oom) 
+skipping: [localhost] => (item=whoopsie) 
+skipping: [localhost] => (item=dnsmasq) 
+skipping: [localhost] => (item=avahi) 
+skipping: [localhost] => (item=nm-openvpn) 
+skipping: [localhost] => (item=tcpdump) 
+skipping: [localhost] => (item=sssd) 
+skipping: [localhost] => (item=speech-dispatcher) 
+skipping: [localhost] => (item=usbmux) 
+skipping: [localhost] => (item=cups-pk-helper) 
+skipping: [localhost] => (item=fwupd-refresh) 
+skipping: [localhost] => (item=saned) 
+skipping: [localhost] => (item=geoclue) 
+skipping: [localhost] => (item=cups-browsed) 
+skipping: [localhost] => (item=pipewire) 
+skipping: [localhost] => (item=hplip) 
+skipping: [localhost] => (item=gnome-remote-desktop) 
+skipping: [localhost] => (item=polkitd) 
+skipping: [localhost] => (item=rtkit) 
+skipping: [localhost] => (item=colord) 
+skipping: [localhost] => (item=gdm) 
+skipping: [localhost] => (item=parker) 
+skipping: [localhost] => (item=sshd) 
+skipping: [localhost] => (item=wazuh) 
+
+TASK [devsec.hardening.os_hardening : Set ownership of root user home directory(s) to 0700] ***
+ok: [localhost] => (item=root)
+
+TASK [devsec.hardening.os_hardening : Set password ageing for root user(s)] ****
+skipping: [localhost] => (item=root) 
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove additional users with UID=0 ("root" user is not touched)] ***
+skipping: [localhost] => (item=root) 
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove shell for linux system accounts] ***
+ok: [localhost] => (item=daemon)
+ok: [localhost] => (item=bin)
+ok: [localhost] => (item=sys)
+ok: [localhost] => (item=games)
+ok: [localhost] => (item=man)
+ok: [localhost] => (item=lp)
+ok: [localhost] => (item=mail)
+ok: [localhost] => (item=news)
+ok: [localhost] => (item=uucp)
+ok: [localhost] => (item=proxy)
+ok: [localhost] => (item=www-data)
+ok: [localhost] => (item=backup)
+ok: [localhost] => (item=list)
+ok: [localhost] => (item=irc)
+ok: [localhost] => (item=_apt)
+ok: [localhost] => (item=systemd-network)
+changed: [localhost] => (item=dhcpcd)
+ok: [localhost] => (item=messagebus)
+ok: [localhost] => (item=syslog)
+ok: [localhost] => (item=systemd-resolve)
+ok: [localhost] => (item=_chrony)
+ok: [localhost] => (item=tss)
+ok: [localhost] => (item=uuidd)
+ok: [localhost] => (item=systemd-oom)
+changed: [localhost] => (item=whoopsie)
+ok: [localhost] => (item=dnsmasq)
+ok: [localhost] => (item=avahi)
+ok: [localhost] => (item=nm-openvpn)
+ok: [localhost] => (item=tcpdump)
+ok: [localhost] => (item=sssd)
+changed: [localhost] => (item=speech-dispatcher)
+ok: [localhost] => (item=usbmux)
+ok: [localhost] => (item=cups-pk-helper)
+ok: [localhost] => (item=fwupd-refresh)
+ok: [localhost] => (item=saned)
+ok: [localhost] => (item=geoclue)
+ok: [localhost] => (item=cups-browsed)
+ok: [localhost] => (item=pipewire)
+changed: [localhost] => (item=hplip)
+ok: [localhost] => (item=gnome-remote-desktop)
+ok: [localhost] => (item=polkitd)
+ok: [localhost] => (item=rtkit)
+ok: [localhost] => (item=colord)
+changed: [localhost] => (item=gdm)
+ok: [localhost] => (item=sshd)
+changed: [localhost] => (item=wazuh)
+
+TASK [devsec.hardening.os_hardening : Lock passwords from linux system accounts] ***
+ok: [localhost] => (item=daemon)
+ok: [localhost] => (item=bin)
+ok: [localhost] => (item=sys)
+ok: [localhost] => (item=games)
+ok: [localhost] => (item=man)
+ok: [localhost] => (item=lp)
+ok: [localhost] => (item=mail)
+ok: [localhost] => (item=news)
+ok: [localhost] => (item=uucp)
+ok: [localhost] => (item=proxy)
+ok: [localhost] => (item=www-data)
+ok: [localhost] => (item=backup)
+ok: [localhost] => (item=list)
+ok: [localhost] => (item=irc)
+ok: [localhost] => (item=_apt)
+skipping: [localhost] => (item=systemd-network) 
+skipping: [localhost] => (item=dhcpcd) 
+skipping: [localhost] => (item=messagebus) 
+skipping: [localhost] => (item=syslog) 
+skipping: [localhost] => (item=systemd-resolve) 
+skipping: [localhost] => (item=_chrony) 
+skipping: [localhost] => (item=tss) 
+skipping: [localhost] => (item=uuidd) 
+skipping: [localhost] => (item=systemd-oom) 
+skipping: [localhost] => (item=whoopsie) 
+skipping: [localhost] => (item=dnsmasq) 
+skipping: [localhost] => (item=avahi) 
+skipping: [localhost] => (item=nm-openvpn) 
+skipping: [localhost] => (item=tcpdump) 
+skipping: [localhost] => (item=sssd) 
+skipping: [localhost] => (item=speech-dispatcher) 
+skipping: [localhost] => (item=usbmux) 
+skipping: [localhost] => (item=cups-pk-helper) 
+skipping: [localhost] => (item=fwupd-refresh) 
+skipping: [localhost] => (item=saned) 
+skipping: [localhost] => (item=geoclue) 
+skipping: [localhost] => (item=cups-browsed) 
+skipping: [localhost] => (item=pipewire) 
+skipping: [localhost] => (item=hplip) 
+skipping: [localhost] => (item=gnome-remote-desktop) 
+skipping: [localhost] => (item=polkitd) 
+skipping: [localhost] => (item=rtkit) 
+skipping: [localhost] => (item=colord) 
+skipping: [localhost] => (item=gdm) 
+skipping: [localhost] => (item=sshd) 
+skipping: [localhost] => (item=wazuh) 
+
+TASK [devsec.hardening.os_hardening : Limit access to home directories of regular (non-system, non-root) accounts] ***
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0750",
++    "mode": "0700",
+     "path": "/home/parker"
+ }
+
+changed: [localhost] => (item=parker)
+
+TASK [devsec.hardening.os_hardening : Get user accounts | os-09] ***************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete rhosts-files from system | os-09] ***
+ok: [localhost] => (item=root)
+ok: [localhost] => (item=daemon)
+ok: [localhost] => (item=bin)
+ok: [localhost] => (item=sys)
+ok: [localhost] => (item=sync)
+ok: [localhost] => (item=games)
+ok: [localhost] => (item=man)
+ok: [localhost] => (item=lp)
+ok: [localhost] => (item=mail)
+ok: [localhost] => (item=news)
+ok: [localhost] => (item=uucp)
+ok: [localhost] => (item=proxy)
+ok: [localhost] => (item=www-data)
+ok: [localhost] => (item=backup)
+ok: [localhost] => (item=list)
+ok: [localhost] => (item=irc)
+ok: [localhost] => (item=_apt)
+ok: [localhost] => (item=nobody)
+ok: [localhost] => (item=systemd-network)
+ok: [localhost] => (item=dhcpcd)
+ok: [localhost] => (item=messagebus)
+ok: [localhost] => (item=syslog)
+ok: [localhost] => (item=systemd-resolve)
+ok: [localhost] => (item=_chrony)
+ok: [localhost] => (item=tss)
+ok: [localhost] => (item=uuidd)
+ok: [localhost] => (item=systemd-oom)
+ok: [localhost] => (item=whoopsie)
+ok: [localhost] => (item=dnsmasq)
+ok: [localhost] => (item=avahi)
+ok: [localhost] => (item=nm-openvpn)
+ok: [localhost] => (item=tcpdump)
+ok: [localhost] => (item=sssd)
+ok: [localhost] => (item=speech-dispatcher)
+ok: [localhost] => (item=usbmux)
+ok: [localhost] => (item=cups-pk-helper)
+ok: [localhost] => (item=fwupd-refresh)
+ok: [localhost] => (item=saned)
+ok: [localhost] => (item=geoclue)
+ok: [localhost] => (item=cups-browsed)
+ok: [localhost] => (item=pipewire)
+ok: [localhost] => (item=hplip)
+ok: [localhost] => (item=gnome-remote-desktop)
+ok: [localhost] => (item=polkitd)
+ok: [localhost] => (item=rtkit)
+ok: [localhost] => (item=colord)
+ok: [localhost] => (item=gdm)
+ok: [localhost] => (item=parker)
+ok: [localhost] => (item=sshd)
+ok: [localhost] => (item=wazuh)
+
+TASK [devsec.hardening.os_hardening : Delete hosts.equiv from system | os-01] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Get user accounts | os-09] ***************
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Delete .netrc-files from system | os-09] ***
+ok: [localhost] => (item=root)
+ok: [localhost] => (item=daemon)
+ok: [localhost] => (item=bin)
+ok: [localhost] => (item=sys)
+ok: [localhost] => (item=sync)
+ok: [localhost] => (item=games)
+ok: [localhost] => (item=man)
+ok: [localhost] => (item=lp)
+ok: [localhost] => (item=mail)
+ok: [localhost] => (item=news)
+ok: [localhost] => (item=uucp)
+ok: [localhost] => (item=proxy)
+ok: [localhost] => (item=www-data)
+ok: [localhost] => (item=backup)
+ok: [localhost] => (item=list)
+ok: [localhost] => (item=irc)
+ok: [localhost] => (item=_apt)
+ok: [localhost] => (item=nobody)
+ok: [localhost] => (item=systemd-network)
+ok: [localhost] => (item=dhcpcd)
+ok: [localhost] => (item=messagebus)
+ok: [localhost] => (item=syslog)
+ok: [localhost] => (item=systemd-resolve)
+ok: [localhost] => (item=_chrony)
+ok: [localhost] => (item=tss)
+ok: [localhost] => (item=uuidd)
+ok: [localhost] => (item=systemd-oom)
+ok: [localhost] => (item=whoopsie)
+ok: [localhost] => (item=dnsmasq)
+ok: [localhost] => (item=avahi)
+ok: [localhost] => (item=nm-openvpn)
+ok: [localhost] => (item=tcpdump)
+ok: [localhost] => (item=sssd)
+ok: [localhost] => (item=speech-dispatcher)
+ok: [localhost] => (item=usbmux)
+ok: [localhost] => (item=cups-pk-helper)
+ok: [localhost] => (item=fwupd-refresh)
+ok: [localhost] => (item=saned)
+ok: [localhost] => (item=geoclue)
+ok: [localhost] => (item=cups-browsed)
+ok: [localhost] => (item=pipewire)
+ok: [localhost] => (item=hplip)
+ok: [localhost] => (item=gnome-remote-desktop)
+ok: [localhost] => (item=polkitd)
+ok: [localhost] => (item=rtkit)
+ok: [localhost] => (item=colord)
+ok: [localhost] => (item=gdm)
+ok: [localhost] => (item=parker)
+ok: [localhost] => (item=sshd)
+ok: [localhost] => (item=wazuh)
+
+TASK [devsec.hardening.os_hardening : Remove unused repositories] **************
+skipping: [localhost] => (item=CentOS-Debuginfo) 
+skipping: [localhost] => (item=CentOS-Media) 
+skipping: [localhost] => (item=CentOS-Vault) 
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Get yum repository files] ****************
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Activate gpg-check for yum repository files] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Activate gpg-check for config files] *****
+skipping: [localhost] => (item=/etc/yum.conf) 
+skipping: [localhost] => (item=/etc/dnf/dnf.conf) 
+skipping: [localhost] => (item=/etc/yum/pluginconf.d/rhnplugin.conf) 
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove deprecated or insecure packages | package-01 - package-09] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.os_hardening : Remove deprecated or insecure packages | package-01 - package-09] ***
+ok: [localhost]
+
+TASK [devsec.hardening.os_hardening : Configure selinux | selinux-01] **********
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Validating arguments against arg spec 'main' - The main entry point for the ssh hardening role.] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Include hardening tasks] ****************
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/hardening.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Fetch OS dependent variables] ***********
+ok: [localhost] => (item=/home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/vars/Debian.yml)
+
+TASK [devsec.hardening.ssh_hardening : Set OS dependent variables, if not already defined by user] ***
+ok: [localhost] => (item={'key': 'ssh_pkgs', 'value': ['openssh-server', 'openssh-client']})
+ok: [localhost] => (item={'key': 'sshd_path', 'value': '/usr/sbin/sshd'})
+ok: [localhost] => (item={'key': 'ssh_host_keys_dir', 'value': '/etc/ssh'})
+ok: [localhost] => (item={'key': 'sshd_service_name', 'value': 'ssh'})
+ok: [localhost] => (item={'key': 'ssh_owner', 'value': 'root'})
+ok: [localhost] => (item={'key': 'ssh_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'ssh_host_keys_owner', 'value': 'root'})
+ok: [localhost] => (item={'key': 'ssh_host_keys_group', 'value': 'root'})
+ok: [localhost] => (item={'key': 'ssh_host_keys_mode', 'value': '0600'})
+ok: [localhost] => (item={'key': 'ssh_selinux_packages', 'value': ['policycoreutils-python-utils', 'checkpolicy']})
+ok: [localhost] => (item={'key': 'ssh_kerberos_support', 'value': True})
+ok: [localhost] => (item={'key': 'ssh_pam_support', 'value': True})
+ok: [localhost] => (item={'key': 'sshd_moduli_file', 'value': '/etc/ssh/moduli'})
+ok: [localhost] => (item={'key': 'sshd_disable_crypto_policy', 'value': False})
+
+TASK [devsec.hardening.ssh_hardening : Install openssh package and configure the service] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/install.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Install openssh package(s)] *************
+ok: [localhost] => (item=openssh-server)
+ok: [localhost] => (item=openssh-client)
+
+TASK [devsec.hardening.ssh_hardening : Change Debian/Ubuntu systems so ssh starts traditionally instead of socket-activated] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/disable-systemd-socket.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Disable systemd-socket activation] ******
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Remove ssh service systemd-socket file] ***
+ok: [localhost] => (item=/etc/systemd/system/ssh.service.d/00-socket.conf)
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/systemd/system/ssh.service.requires/ssh.socket",
+-    "state": "link"
++    "state": "absent"
+ }
+
+changed: [localhost] => (item=/etc/systemd/system/ssh.service.requires/ssh.socket)
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/systemd/system/sockets.target.wants/ssh.socket",
+-    "state": "link"
++    "state": "absent"
+ }
+
+changed: [localhost] => (item=/etc/systemd/system/sockets.target.wants/ssh.socket)
+
+TASK [devsec.hardening.ssh_hardening : Ensure ssh service is started after disabling socket activation] ***
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Ensure privilege separation directory exists] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Enable or disable sshd service] *********
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Get openssh-version] ********************
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Parse openssh-version] ******************
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set default for ssh_host_key_files if not supplied] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/crypto_hostkeys.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Replace default 2048 bits RSA keypair] ***
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set hostkeys according to openssh-version if openssh >= 5.3] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set hostkeys according to openssh-version if openssh >= 6.0] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set hostkeys according to openssh-version if openssh >= 6.3] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Change host private key ownership, group and permissions] ***
+ok: [localhost] => (item=/etc/ssh/ssh_host_rsa_key)
+ok: [localhost] => (item=/etc/ssh/ssh_host_ecdsa_key)
+ok: [localhost] => (item=/etc/ssh/ssh_host_ed25519_key)
+
+TASK [devsec.hardening.ssh_hardening : Set default for ssh_macs if not supplied] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/crypto_macs.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Set macs according to openssh-version if openssh >= 5.3] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set macs according to openssh-version if openssh >= 5.9] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set macs according to openssh-version if openssh >= 6.6] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set macs according to openssh-version if openssh >= 7.6] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set default for ssh_ciphers if not supplied] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/crypto_ciphers.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Set ciphers according to openssh-version if openssh >= 5.3] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set ciphers according to openssh-version if openssh >= 6.6] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set default for ssh_kex if not supplied] ***
+included: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/ssh_hardening/tasks/crypto_kex.yml for localhost
+
+TASK [devsec.hardening.ssh_hardening : Set kex according to openssh-version if openssh >= 5.9] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set kex according to openssh-version if openssh >= 6.6] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set kex according to openssh-version if openssh >= 8.0] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Set kex according to openssh-version if openssh >= 8.5] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Create revoked_keys and set permissions to root/600] ***
+--- before
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmp97vi74m5/revoked_keys.j2
+@@ -0,0 +1,5 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.ssh_hardening
++
+
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Create sshd_config and set permissions to root/600] ***
+--- before: /etc/ssh/sshd_config
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmpg2zbyfb2/opensshd.conf.j2
+@@ -1,145 +1,182 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.ssh_hardening
+ 
+-# This is the sshd server system-wide configuration file.  See
+-# sshd_config(5) for more information.
++# This is the sshd server system-wide configuration file.
++# See sshd_config(5) for more information.
+ 
+-# This sshd was compiled with PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+ 
+-# The strategy used for options in the default sshd_config shipped with
+-# OpenSSH is to specify options with their default value where
+-# possible, but leave them commented.  Uncommented options override the
+-# default value.
++# Basic configuration
++# ===================
+ 
+-# In general, the first uncommented definition of an option takes precedence.
+-# For options that accept multiple values, like 'Port', subsequent definitions
+-# are appended to the configuration.
++# Either disable or only allow root login via certificates.
++PermitRootLogin no
++
++# TCP port sshd should listen on. Default is 22.
++Port 22
++
++# Address family should always be limited to the active network configuration.
++AddressFamily any
++
++# Addresses sshd listens on. Default is 0.0.0.0.
++# Specify desired address here if you don't want sshd to listen on all available addresses.
++ListenAddress 0.0.0.0
++
++# HostKeys are listed here.
++HostKey /etc/ssh/ssh_host_rsa_key
++HostKey /etc/ssh/ssh_host_ecdsa_key
++HostKey /etc/ssh/ssh_host_ed25519_key
++
++# HostCertificates are listed here.
++
++# Host key algorithms that the server offers.
+ #
+-# Note that the above implies that configuration options from snippets in
+-# /etc/ssh/sshd_config.d/*.conf take precedence over those defined in this
+-# file. In addition, configuration snippet files are processed in lexical
+-# order, so options defined in files with names that sort earlier take
+-# precedence.
++# HostKeyAlgorithms
+ #
+-# Such configuration snippets may be present in default installations of
+-# Ubuntu.
+-Include /etc/ssh/sshd_config.d/*.conf
+ 
+-# When systemd socket activation is used (the default), the socket
+-# configuration must be re-generated after changing Port, AddressFamily, or
+-# ListenAddress.
++# Security configuration
++# ======================
++
++# Make sure sshd checks file modes and ownership before accepting logins. This prevents accidental misconfiguration.
++StrictModes yes
++
++# Logging, obsoletes QuietMode and FascistLogging
++SyslogFacility AUTH
++LogLevel VERBOSE
++
++# Cryptography
++# ------------
++
++# **Ciphers** -- If your clients don't support CTR (eg older versions), cbc will be added
++# CBC: is true if you want to connect with OpenSSL-base libraries
++# eg ruby Net::SSH::Transport::CipherFactory requires cbc-versions of the given openssh ciphers to work
++# -- see: (http://net-ssh.github.com/net-ssh/classes/Net/SSH/Transport/CipherFactory.html)
+ #
+-# For changes to take effect, run:
++Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
++
++# **Hash algorithms** -- SHA-1 is formally deprecated by NIST in 2011 because of security issues.
++# Weak HMAC is sometimes required if older package versions are used
++# eg Ruby's Net::SSH at around 2.2.* doesn't support sha2 for hmac, so this will have to be set true in this case.
+ #
+-#   systemctl daemon-reload
+-#   systemctl restart ssh.socket
++MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
++
++# **Key Exchange Algorithms** -- SHA-1 is formally deprecated by NIST in 2011 because of security issues.
++# Weak kex is sometimes required if older package versions are used
++# eg ruby's Net::SSH at around 2.2.* doesn't support sha2 for kex, so this will have to be set true in this case.
++# based on: https://bettercrypto.org/static/applied-crypto-hardening.pdf
+ #
+-#Port 22
+-#AddressFamily any
+-#ListenAddress 0.0.0.0
+-#ListenAddress ::
++KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+ 
+-#HostKey /etc/ssh/ssh_host_rsa_key
+-#HostKey /etc/ssh/ssh_host_ecdsa_key
+-#HostKey /etc/ssh/ssh_host_ed25519_key
++# Authentication
++# --------------
+ 
+-# Ciphers and keying
+-#RekeyLimit default none
++# Secure Login directives.
+ 
+-# Logging
+-#SyslogFacility AUTH
+-#LogLevel INFO
++LoginGraceTime 30s
++MaxAuthTries 4
++MaxSessions 10
++MaxStartups 10:30:60
+ 
+-# Authentication:
++# Enable public key authentication
++PubkeyAuthentication yes
+ 
+-#LoginGraceTime 2m
+-#PermitRootLogin prohibit-password
+-#StrictModes yes
+-#MaxAuthTries 6
+-#MaxSessions 10
++# Never use host-based authentication. It can be exploited.
++IgnoreRhosts yes
++IgnoreUserKnownHosts yes
++HostbasedAuthentication no
+ 
+-#PubkeyAuthentication yes
++# Enable PAM to enforce system wide rules.
++UsePAM yes
+ 
+-# Expect .ssh/authorized_keys2 to be disregarded by default in future.
+-#AuthorizedKeysFile	.ssh/authorized_keys .ssh/authorized_keys2
++AuthenticationMethods any
+ 
+-#AuthorizedPrincipalsFile none
++# Disable password-based authentication, it can allow for potentially easier brute-force attacks.
++PasswordAuthentication yes
++PermitEmptyPasswords no
++ChallengeResponseAuthentication no
+ 
+-#AuthorizedKeysCommand none
+-#AuthorizedKeysCommandUser nobody
+-
+-# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+-#HostbasedAuthentication no
+-# Change to yes if you don't trust ~/.ssh/known_hosts for
+-# HostbasedAuthentication
+-#IgnoreUserKnownHosts no
+-# Don't read the user's ~/.rhosts and ~/.shosts files
+-#IgnoreRhosts yes
+-
+-# To disable tunneled clear text passwords, change to "no" here!
+-#PasswordAuthentication yes
+-#PermitEmptyPasswords no
+-
+-# Change to "yes" to enable keyboard-interactive authentication.  Depending on
+-# the system's configuration, this may involve passwords, challenge-response,
+-# one-time passwords or some combination of these and other methods.
+-# Beware issues with some PAM modules and threads.
+-KbdInteractiveAuthentication no
+-
+-# Kerberos options
+-#KerberosAuthentication no
+-#KerberosOrLocalPasswd yes
+-#KerberosTicketCleanup yes
++# Only enable Kerberos authentication if it is configured.
++KerberosAuthentication no
++KerberosOrLocalPasswd no
++KerberosTicketCleanup yes
+ #KerberosGetAFSToken no
+ 
+-# GSSAPI options
+-#GSSAPIAuthentication no
+-#GSSAPICleanupCredentials yes
+-#GSSAPIStrictAcceptorCheck yes
+-#GSSAPIKeyExchange no
++# Only enable GSSAPI authentication if it is configured.
++GSSAPIAuthentication no
++GSSAPICleanupCredentials yes
+ 
+-# Set this to 'yes' to enable PAM authentication, account processing,
+-# and session processing. If this is enabled, PAM authentication will
+-# be allowed through the KbdInteractiveAuthentication and
+-# PasswordAuthentication.  Depending on your PAM configuration,
+-# PAM authentication via KbdInteractiveAuthentication may bypass
+-# the setting of "PermitRootLogin prohibit-password".
+-# If you just want the PAM account and session checks to run without
+-# PAM authentication, then enable this but set PasswordAuthentication
+-# and KbdInteractiveAuthentication to 'no'.
+-UsePAM yes
++AllowUsers parker
+ 
+-#AllowAgentForwarding yes
+-#AllowTcpForwarding yes
+-#GatewayPorts no
+-X11Forwarding yes
+-#X11DisplayOffset 10
+-#X11UseLocalhost yes
+-#PermitTTY yes
++
++# Network
++# -------
++
++# Disable TCP keep alive since it is spoofable. Use ClientAlive messages instead, they use the encrypted channel
++TCPKeepAlive no
++
++# Manage `ClientAlive..` signals via interval and maximum count.
++# This will periodically check up to a `..CountMax` number of times within `..Interval` timeframe,
++# and abort the connection once these fail.
++ClientAliveInterval 300
++ClientAliveCountMax 2
++
++# Disable tunneling
++PermitTunnel no
++
++# Disable forwarding tcp connections.
++# no real advantage without denied shell access
++AllowTcpForwarding local
++
++# Disable agent forwarding, since local agent could be accessed through forwarded connection.
++# no real advantage without denied shell access
++AllowAgentForwarding no
++
++# Do not allow remote port forwardings to bind to non-loopback addresses.
++GatewayPorts no
++
++# Disable X11 forwarding, since local X11 display could be accessed through forwarded connection.
++X11Forwarding no
++X11UseLocalhost yes
++
++# User environment configuration
++# ==============================
++
++PermitUserEnvironment no
++
++
++# Misc. configuration
++# ===================
++
++Compression no
++
++UseDNS no
++
+ PrintMotd no
+-#PrintLastLog yes
+-#TCPKeepAlive yes
+-#PermitUserEnvironment no
+-#Compression delayed
+-#ClientAliveInterval 0
+-#ClientAliveCountMax 3
+-#UseDNS no
+-#PidFile /run/sshd.pid
+-#MaxStartups 10:30:100
+-#PermitTunnel no
+-#ChrootDirectory none
+-#VersionAddendum none
+ 
+-# no default banner path
+-#Banner none
++PrintLastLog no
+ 
+-# Allow client to pass locale and color environment variables
+-AcceptEnv LANG LC_* COLORTERM NO_COLOR
++Banner none
+ 
++DebianBanner no
++
++# Reject keys that are explicitly blacklisted
++RevokedKeys /etc/ssh/revoked_keys
++
++# SFTP matching configuration
++# ===========================
++# Configuration, in case SFTP is used
+ # override default of no subsystems
+-Subsystem	sftp	/usr/lib/openssh/sftp-server
++# Subsystem sftp /opt/app/openssh5/libexec/sftp-server
+ 
+-# Example of overriding settings on a per-user basis
+-#Match User anoncvs
+-#	X11Forwarding no
+-#	AllowTcpForwarding no
+-#	PermitTTY no
+-#	ForceCommand cvs server
++Subsystem sftp internal-sftp -l INFO -f LOCAL6 -u 0027
++
++# These lines must appear at the *end* of sshd_config
++Match Group sftponly
++    ForceCommand internal-sftp -l INFO -f LOCAL6 -u 0027
++    ChrootDirectory /home/%u
++    AllowTcpForwarding no
++    AllowAgentForwarding no
++    PasswordAuthentication yes
++    PermitRootLogin no
++    X11Forwarding no
+
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Disable dynamic MOTD] *******************
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Create ssh_config and set permissions to root/644] ***
+--- before: /etc/ssh/ssh_config
++++ after: /home/parker/.ansible/tmp/ansible-local-3130396zdf33cv/tmp43rrah2n/openssh.conf.j2
+@@ -1,52 +1,98 @@
++#
++# Ansible managed
++#
++# Generated by Ansible role devsec.hardening.ssh_hardening
+ 
+-# This is the ssh client system-wide configuration file.  See
+-# ssh_config(5) for more information.  This file provides defaults for
+-# users, and the values can be changed in per-user configuration files
+-# or on the command line.
++# This is the ssh client system-wide configuration file.
++# See ssh_config(5) for more information on any settings used.
+ 
+-# Configuration data is parsed as follows:
+-#  1. command line options
+-#  2. user-specific file
+-#  3. system-wide file
+-# Any configuration value is only changed the first time it is set.
+-# Thus, host-specific definitions should be at the beginning of the
+-# configuration file, and defaults at the end.
+ 
+-# Site-wide defaults for some commonly used options.  For a comprehensive
+-# list of available options, their meanings and defaults, please see the
+-# ssh_config(5) man page.
++# Basic configuration
++# ===================
+ 
+-Include /etc/ssh/ssh_config.d/*.conf
++# Address family should always be limited to the active network configuration.
++AddressFamily any
+ 
++# Global defaults for all Hosts
+ Host *
+-#   ForwardAgent no
+-#   ForwardX11 no
+-#   ForwardX11Trusted yes
+-#   PasswordAuthentication yes
+-#   HostbasedAuthentication no
+-#   GSSAPIAuthentication no
+-#   GSSAPIDelegateCredentials no
+-#   GSSAPIKeyExchange no
+-#   GSSAPITrustDNS no
+-#   BatchMode no
+-#   CheckHostIP no
+-#   AddressFamily any
+-#   ConnectTimeout 0
+-#   StrictHostKeyChecking ask
+-#   IdentityFile ~/.ssh/id_rsa
+-#   IdentityFile ~/.ssh/id_ecdsa
+-#   IdentityFile ~/.ssh/id_ed25519
+-    Port 22
+-#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+-#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com
+-#   EscapeChar ~
+-#   Tunnel no
+-#   TunnelDevice any:any
+-#   PermitLocalCommand no
+-#   VisualHostKey no
+-#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+-#   RekeyLimit 1G 1h
+-#   UserKnownHostsFile ~/.ssh/known_hosts.d/%k
+-    SendEnv LANG LC_* COLORTERM NO_COLOR
+-    HashKnownHosts yes
+-    GSSAPIAuthentication yes
++
++# The port at the destination should be defined
++Port 22
++
++# Identity file configuration. You may restrict available identity files.
++# Otherwise ssh will search for a pattern and use any that matches.
++#IdentityFile ~/.ssh/identity
++#IdentityFile ~/.ssh/id_rsa
++#IdentityFile ~/.ssh/id_dsa
++
++
++# Security configuration
++# ======================
++
++# Make sure passphrase querying is enabled
++BatchMode no
++
++# Prevent IP spoofing by checking to host IP against the `known_hosts` file.
++CheckHostIP yes
++
++# Always ask before adding keys to the `known_hosts` file. Do not set to `yes`.
++StrictHostKeyChecking ask
++
++# **Ciphers** -- If your clients don't support CTR (eg older versions), cbc will be added
++# CBC: is true if you want to connect with OpenSSL-base libraries
++# eg ruby Net::SSH::Transport::CipherFactory requires cbc-versions of the given openssh ciphers to work
++# -- see: (http://net-ssh.github.com/net-ssh/classes/Net/SSH/Transport/CipherFactory.html)
++#
++Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
++
++# **Hash algorithms** -- Make sure not to use SHA1 for hashing, unless it is really necessary.
++# Weak HMAC is sometimes required if older package versions are used
++# eg Ruby's Net::SSH at around 2.2.* doesn't support sha2 for hmac, so this will have to be set true in this case.
++#
++MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
++
++# **Key Exchange Algorithms** -- Make sure not to use SHA1 for kex, unless it is really necessary
++# Weak kex is sometimes required if older package versions are used
++# eg ruby's Net::SSH at around 2.2.* doesn't support sha2 for kex, so this will have to be set true in this case.
++# based on: https://bettercrypto.org/static/applied-crypto-hardening.pdf
++#
++KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
++
++# Specifies the host key algorithms that the client wants to use in order of preference.
++#
++# HostKeyAlgorithms
++#
++
++# Disable agent forwarding, since local agent could be accessed through forwarded connection.
++
++ForwardAgent no
++
++
++# Disable X11 forwarding, since local X11 display could be accessed through forwarded connection.
++ForwardX11 no
++
++# Never use host-based authentication. It can be exploited.
++HostbasedAuthentication no
++
++# Disable password-based authentication, it can allow for potentially easier brute-force attacks.
++PasswordAuthentication no
++
++# Only use GSSAPIAuthentication if implemented on the network.
++GSSAPIAuthentication no
++GSSAPIDelegateCredentials no
++
++# Disable tunneling
++Tunnel no
++
++# Disable local command execution.
++PermitLocalCommand no
++
++
++# Misc. configuration
++# ===================
++
++Compression no
++
++#EscapeChar ~
++#VisualHostKey yes
++
+
+changed: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Check if for weak DH parameters in /etc/ssh/moduli] ***
+ok: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Remove all small primes] ****************
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Include tasks to setup ca keys and principals] ***
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Include selinux specific tasks] *********
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Gather package facts] *******************
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Disable SSH server CRYPTO_POLICY] *******
+skipping: [localhost]
+
+TASK [devsec.hardening.ssh_hardening : Enable or disable sshd service] *********
+changed: [localhost]
+
+TASK [Install unattended-upgrades] *********************************************
+ok: [localhost]
+
+TASK [Turn on daily automatic security updates] ********************************
+--- before: /etc/apt/apt.conf.d/20auto-upgrades
++++ after: /etc/apt/apt.conf.d/20auto-upgrades
+@@ -1,2 +1,3 @@
+ APT::Periodic::Update-Package-Lists "1";
+ APT::Periodic::Unattended-Upgrade "1";
++APT::Periodic::AutocleanInterval "7";
+
+changed: [localhost]
+
+TASK [Never auto-reboot (this box is the house DNS)] ***************************
+--- before
++++ after: /etc/apt/apt.conf.d/52no-auto-reboot
+@@ -0,0 +1 @@
++Unattended-Upgrade::Automatic-Reboot "false";
+
+changed: [localhost]
+
+RUNNING HANDLER [devsec.hardening.os_hardening : Reload systemd] ***************
+ok: [localhost]
+
+RUNNING HANDLER [devsec.hardening.os_hardening : Restart auditd via systemd] ***
+[ERROR]: Task failed: Module failed: Could not find the requested service auditd.service: host
+Origin: /home/parker/.ansible/collections/ansible_collections/devsec/hardening/roles/os_hardening/handlers/main.yml:9:3
+
+7     daemon_reload: true
+8
+9 - name: Restart auditd via systemd
+    ^ column 3
+
+fatal: [localhost]: FAILED! => {"changed": false, "msg": "Could not find the requested service auditd.service: host"}
+...ignoring
+
+RUNNING HANDLER [devsec.hardening.os_hardening : Restart auditd via service] ***
+skipping: [localhost]
+
+RUNNING HANDLER [devsec.hardening.os_hardening : Remount filesystems] **********
+changed: [localhost] => (item=/dev)
+changed: [localhost] => (item=/dev/shm)
+changed: [localhost] => (item=/run)
+
+RUNNING HANDLER [devsec.hardening.os_hardening : Restart journald] *************
+changed: [localhost]
+
+RUNNING HANDLER [devsec.hardening.ssh_hardening : Restart sshd] ****************
+changed: [localhost]
+
+TASK [Check SSH config is valid before anyone logs out] ************************
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=145  changed=47   unreachable=0    failed=0    skipped=56   rescued=0    ignored=1   
+

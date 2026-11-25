@@ -1,0 +1,15 @@
+{% for group in services | map(attribute='group') | unique %}
+- {{ group }}:
+{% for s in services if s.group == group %}
+    - {{ s.title }}:
+        icon: {{ s.icon }}
+        href: {{ s.url }}
+        description: {{ s.description }}
+{% if s.monitor is defined %}
+        siteMonitor: {{ s.monitor }}
+{% endif %}
+{% if s.ping is defined %}
+        ping: {{ s.ping }}
+{% endif %}
+{% endfor %}
+{% endfor %}

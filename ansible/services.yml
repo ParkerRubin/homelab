@@ -1,0 +1,90 @@
+# One list drives everything: Traefik ingress rules and Homepage tiles.
+# Add an app here, rerun the playbook, done.
+#
+# name:        Kubernetes object name (and the .lab hostname unless "host" is set)
+# title:       name shown on Homepage
+# group:       Homepage section
+# url:         link the tile opens
+# namespace/service/port: the Kubernetes Service the ingress points at
+# external:    IP of something running OUTSIDE the cluster (Docker), instead of a Service
+# scheme:      https if the backend only speaks HTTPS
+# ingress:     false to skip the ingress (dashboard tile only)
+# monitor/ping: how Homepage checks up/down
+
+lab_domain: lab
+
+services:
+  - name: grafana
+    title: Grafana
+    group: Monitoring
+    icon: grafana.png
+    description: Cluster and NUC metrics
+    url: http://192.168.4.86:30300
+    namespace: monitoring
+    service: monitoring-grafana
+    port: 80
+    monitor: http://monitoring-grafana.monitoring.svc.cluster.local
+
+  - name: adguard
+    title: AdGuard Home
+    group: Monitoring
+    icon: adguard-home.png
+    description: House DNS and ad blocking
+    url: http://192.168.4.86:30301
+    namespace: default
+    service: adguard-web
+    port: 80
+    monitor: http://adguard-web.default.svc.cluster.local
+
+  - name: wazuh
+    title: Wazuh
+    group: Security
+    icon: wazuh.png
+    description: SIEM and endpoint security
+    url: https://192.168.4.86:8443
+    namespace: default
+    external: 192.168.4.86
+    port: 8443
+    scheme: https
+    ping: 192.168.4.86
+
+  - name: jellyfin
+    title: Jellyfin
+    group: Apps
+    icon: jellyfin.png
+    description: Media streaming
+    url: http://192.168.4.86:30096
+    namespace: default
+    service: jellyfin
+    port: 8096
+    monitor: http://jellyfin.default.svc.cluster.local:8096
+
+  - name: vaultwarden
+    title: Vaultwarden
+    group: Apps
+    icon: vaultwarden.png
+    description: Password manager
+    url: https://parker-nuc7i5bnh.tail702c13.ts.net
+    ingress: false   # served over HTTPS by tailscale serve instead
+    monitor: http://vaultwarden.default.svc.cluster.local
+
+  - name: files
+    title: FileBrowser
+    group: Apps
+    icon: filebrowser.png
+    description: Upload and manage files
+    url: http://192.168.4.86:30020
+    namespace: default
+    service: filebrowser
+    port: 8080
+    monitor: http://filebrowser.default.svc.cluster.local:8080
+
+  - name: dashboard
+    title: Homepage
+    group: Apps
+    icon: homepage.png
+    description: This page
+    url: http://192.168.4.86:30010
+    namespace: default
+    service: homepage
+    port: 3000

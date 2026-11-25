@@ -1,0 +1,42 @@
+- name: Sync homelab ingress and Homepage from services.yml
+  hosts: nuc
+  gather_facts: false
+  vars_files:
+    - services.yml
+  environment:
+    KUBECONFIG: "{{ lookup('env', 'HOME') }}/.kube/config"
+  vars:
+    build_dir: "{{ playbook_dir }}/build"
+
+  tasks:
+    - name: Make build folder
+      ansible.builtin.file:
+        path: "{{ build_dir }}"
+        state: directory
+
+    - name: Render ingress manifest
+      ansible.builtin.template:
+        src: templates/ingress.yaml.j2
+        dest: "{{ build_dir }}/ingress.yaml"
+
+    - name: Apply ingress manifest
+      ansible.builtin.command: kubectl apply -f {{ build_dir }}/ingress.yaml
+      register: ingress_result
+      changed_when: "'configured' in ingress_result.stdout or 'created' in ingress_result.stdout"
+
+    - name: Render Homepage services patch
+      ansible.builtin.copy:
+        content: "{{ {'data': {'services.yaml': lookup('template', 'templates/services.yaml.j2')}} | to_json }}"
+        dest: "{{ build_dir }}/homepage-patch.json"
+
+    - name: Update Homepage tiles
+      ansible.builtin.command: >
+        kubectl patch configmap homepage-config -n default
+        --type merge --patch-file {{ build_dir }}/homepage-patch.json
+      register: homepage_result
+      changed_when: "'no change' not in homepage_result.stdout"
+      notify: Restart Homepage
+
+  handlers:
+    - name: Restart Homepage
+      ansible.builtin.command: kubectl rollout restart deployment homepage -n default
